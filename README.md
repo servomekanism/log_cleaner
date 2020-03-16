@@ -1,7 +1,7 @@
-x64Demo.exe 在64位系统下：请使用realse x64编译生成 
+x64Demo.exe 在64位系统下：请使用Release x64编译生成 
 
 
-x32Demo.exe 在32位系统下：请使用realse x32编译生成
+x32Demo.exe 在32位系统下：请使用Release x32编译生成
 
 
 示例：
