@@ -131,7 +131,7 @@ BOOL fn_query_thread_information(DWORD dwProcessId, HANDLE hOpenThread)
 	{
 		fn_GetLastError("fn_query_thread_information OPenProc Failed! ");
 	}
-	IsWow64Process(hProcess, &Status);
+    IsWow64Process(GetCurrentProcess(), &Status);
 	if (!Status)
 		dwOffset = 0x1720;
 	else
@@ -191,7 +191,7 @@ BOOL fn_GrantPriviledge(WCHAR* PriviledgeName)
 	HANDLE             TokenHandle = NULL;
 	LUID             uID;
 
-	// ´ò¿ªÈ¨ÏŞÁîÅÆ
+	// æ‰“å¼€æƒé™ä»¤ç‰Œ
 	if (!OpenThreadToken(GetCurrentThread(), TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, FALSE, &TokenHandle))
 	{
 		if (GetLastError() != ERROR_NO_TOKEN)
@@ -204,25 +204,25 @@ BOOL fn_GrantPriviledge(WCHAR* PriviledgeName)
 		}
 	}
 
-	if (!LookupPrivilegeValue(NULL, PriviledgeName, &uID))        // Í¨¹ıÈ¨ÏŞÃû³Æ²éÕÒuID
+	if (!LookupPrivilegeValue(NULL, PriviledgeName, &uID))        // é€šè¿‡æƒé™åç§°æŸ¥æ‰¾uID
 	{
 		fn_GetLastError("LookupPrivilegeValue");
 		CloseHandle(TokenHandle);
 		return FALSE;
 	}
 
-	TokenPrivileges.PrivilegeCount = 1;        // ÒªÌáÉıµÄÈ¨ÏŞ¸öÊı
-	TokenPrivileges.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;    // ¶¯Ì¬Êı×é£¬Êı×é´óĞ¡¸ù¾İCountµÄÊıÄ¿
+	TokenPrivileges.PrivilegeCount = 1;        // è¦æå‡çš„æƒé™ä¸ªæ•°
+	TokenPrivileges.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;    // åŠ¨æ€æ•°ç»„ï¼Œæ•°ç»„å¤§å°æ ¹æ®Countçš„æ•°ç›®
 	TokenPrivileges.Privileges[0].Luid = uID;
 
-	// ÔÚÕâÀïÎÒÃÇ½øĞĞµ÷ÕûÈ¨ÏŞ
+	// åœ¨è¿™é‡Œæˆ‘ä»¬è¿›è¡Œè°ƒæ•´æƒé™
 	if (!AdjustTokenPrivileges(TokenHandle, FALSE, &TokenPrivileges, sizeof(TOKEN_PRIVILEGES), &OldPrivileges, &dwReturnLength))
 	{
 		CloseHandle(TokenHandle);
 		return FALSE;
 	}
 
-	// ³É¹¦ÁË
+	// æˆåŠŸäº†
 	cout <<"[+] AdjustTokenPrivileges Successful!"<< endl;
 	CloseHandle(TokenHandle);
 	return TRUE;
