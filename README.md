@@ -1,6 +1,12 @@
-在64位系统下：请使用realse x64编译
-在64位系统下：请使用realse x32编译
+x64Demo.exe 在64位系统下：请使用realse x64编译生成 
 
+
+x32Demo.exe 在32位系统下：请使用realse x32编译生成
+
+
+示例：
+
+![Demo](https://gitee.com/L0yy/log_cleaning/raw/master/example.gif)
 
 ### NtQueryInformationThread
 
