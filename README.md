@@ -16,7 +16,6 @@ x86 PPEB + 0xF60
 
 x64 PPEB + 0x1720 
 
-
 参考http://terminus.rewolf.pl/terminus/structures/ntdll/_TEB_x64.html
 
 ### _I_QueryTagInformation
